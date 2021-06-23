@@ -22,6 +22,18 @@ services:
       - "2222:22"
     command: sftp_test:sftp_test:::uploads
 
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: monitoring_cadvisor
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    expose:
+      - 8080
+
   app:
     build: .
     image: complat/chemotion_eln
